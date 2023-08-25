@@ -45,7 +45,23 @@ end
 
 This will start emitting the RED metrics for HTTP requests on `/metrics` path.
 
-You can scrape it using a Prometheus and visualize it in Grafana.
+### Supported labels
+
+1. `path` - HTTP request path, removes id and uuid from the request path.
+2. `method` - HTTP method
+3. `status` - HTTP status code. Eg. 404
+4. `environment` - Rack or Rails enviornment set in the enviornment.
+5. `program` - Application name, defaults to `web-application`. Can be customized by setting `Openapm.default_labels` hash.
+
+### Additional labels
+
+You can set additional labels by setting `Openapm.default_labels`
+
+``` ruby
+Openapm.default_labels = { service: 'web-service', stack: 'rails', team: 'platform' }
+```
+
+These labels will be added to each metric time series by default as static values.
 
 ## Development
 
