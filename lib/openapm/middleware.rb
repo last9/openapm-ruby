@@ -2,7 +2,6 @@ require 'prometheus/middleware/exporter'
 require 'prometheus/client'
 
 class Openapm::Middleware
-
   def initialize(app)
     @app = app
     @metric_path = "/metrics"
@@ -31,7 +30,7 @@ class Openapm::Middleware
       elapsed_time = (ending - starting) * 1000
 
       status = (result && result[0]) || -1
-      @histogram.observe(elapsed_time, labels: { path: env['PATH_INFO'], method: env['REQUEST_METHOD'], status: status, environment: env['RACK_ENV'] })
+      @histogram.observe(elapsed_time, labels: { path: env['PATH_INFO'], method: env['REQUEST_METHOD'], status: status, environment: ENV["RAILS_ENV"] || ENV["RACK_ENV"] })
     end
   end
 end
