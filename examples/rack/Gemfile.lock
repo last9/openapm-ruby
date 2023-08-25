@@ -1,0 +1,30 @@
+PATH
+  remote: ../..
+  specs:
+    openapm (0.1.0)
+      prometheus-client (~> 4.2.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    nio4r (2.5.9)
+    prometheus-client (4.2.1)
+    puma (6.3.1)
+      nio4r (~> 2.0)
+    rack (3.0.8)
+    rackup (2.1.0)
+      rack (>= 3)
+      webrick (~> 1.8)
+    webrick (1.8.1)
+
+PLATFORMS
+  arm64-darwin-21
+
+DEPENDENCIES
+  openapm!
+  puma
+  rack
+  rackup
+
+BUNDLED WITH
+   2.3.7
