@@ -1,8 +1,6 @@
 # Openapm
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/openapm`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+APM for Rack based Ruby applications using Prometheus and Grafana.
 
 ## Installation
 
@@ -14,15 +12,28 @@ gem 'openapm'
 
 And then execute:
 
-    $ bundle
+$ bundle
 
 Or install it yourself as:
 
-    $ gem install openapm
+$ gem install openapm
 
 ## Usage
 
-TODO: Write usage instructions here
+### Rack application
+
+```ruby
+# config.ru
+require 'rack'
+require 'openapm/middleware'
+
+use Rack::Deflater
+use Openapm::Middleware
+```
+
+This will start emitting the RED metrics for HTTP requests on `/metrics` path.
+
+You can scrape it using a Prometheus and visualize it in Grafana.
 
 ## Development
 
@@ -36,8 +47,8 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/pratha
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [Apache 2 License](https://www.apache.org/licenses/LICENSE-2.0).
 
 ## Code of Conduct
 
-Everyone interacting in the Openapm project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/prathamesh-sonpatki/openapm/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Openapm project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/last9/openapm/blob/master/CODE_OF_CONDUCT.md).
