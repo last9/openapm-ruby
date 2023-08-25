@@ -8,8 +8,9 @@ class Openapm::Middleware
     @registry =  Prometheus::Client.registry
     @histogram = Prometheus::Client::Histogram.new(:http_requests_duration_milliseconds,
                                                    docstring: 'Duration of HTTP requests in milliseconds',
-                                                   labels: [:path, :method, :status, :environment],
-                                                   buckets: [0.25, 1.5, 31]
+                                                   labels: [:program, :path, :method, :status, :environment],
+                                                   buckets: [0.25, 1.5, 31],
+                                                   preset_labels: Openapm.default_labels
                                                   )
     @registry.register(@histogram)
 
