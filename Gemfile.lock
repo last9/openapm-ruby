@@ -9,16 +9,17 @@ GEM
   specs:
     minitest (5.19.0)
     prometheus-client (4.2.1)
-    rake (10.5.0)
+    rake (13.0.6)
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   bundler
   minitest (~> 5.0)
   openapm!
-  rake (~> 10.0)
+  rake (~> 13.0)
 
 BUNDLED WITH
    2.3.7
