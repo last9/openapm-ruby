@@ -43,7 +43,7 @@ unless Rails.env.test?
 end
 ```
 
-This will start emitting the RED metrics for HTTP requests on `/metrics` path.
+This will start emitting the RED metrics for HTTP requests on `/metrics` path which can be scraped by a Prometheus.
 
 ### Supported labels
 
