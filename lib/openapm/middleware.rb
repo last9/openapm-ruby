@@ -30,7 +30,21 @@ class Openapm::Middleware
       elapsed_time = (ending - starting) * 1000
 
       status = (result && result[0]) || -1
-      @histogram.observe(elapsed_time, labels: { path: env['PATH_INFO'], method: env['REQUEST_METHOD'], status: status, environment: ENV["RAILS_ENV"] || ENV["RACK_ENV"] })
+      @histogram.observe(elapsed_time, labels: { path: generate_path(env), method: env['REQUEST_METHOD'], status: status, environment: ENV["RAILS_ENV"] || ENV["RACK_ENV"] })
     end
+  end
+
+  protected
+
+  def generate_path(env)
+    full_path = [env['SCRIPT_NAME'], env['PATH_INFO']].join
+
+    sanitize_id(full_path)
+  end
+
+  def sanitize_id(path)
+    path
+      .gsub(%r{/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(?=/|$)}, '/:uuid\\1')
+      .gsub(%r{/\d+(?=/|$)}, '/:id\\1')
   end
 end
