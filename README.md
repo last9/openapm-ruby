@@ -31,6 +31,18 @@ use Rack::Deflater
 use Openapm::Middleware
 ```
 
+### Rails application
+
+``` ruby
+# config/initializers/openapm.rb
+
+unless Rails.env.test?
+  require 'openapm/middleware'
+
+  Rails.application.middleware.unshift Openapm::Middleware
+end
+```
+
 This will start emitting the RED metrics for HTTP requests on `/metrics` path.
 
 You can scrape it using a Prometheus and visualize it in Grafana.
