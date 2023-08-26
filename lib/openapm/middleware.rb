@@ -5,19 +5,23 @@ class Openapm::Middleware
   def initialize(app)
     @app = app
     @metric_path = "/metrics"
-    @registry =  Prometheus::Client.registry
+    @registry = Prometheus::Client.registry
     @histogram = Prometheus::Client::Histogram.new(:http_requests_duration_milliseconds,
                                                    docstring: 'Duration of HTTP requests in milliseconds',
                                                    labels: [:program, :path, :method, :status, :environment],
-                                                   buckets: [0.25, 1.5, 31],
+                                                   buckets: Prometheus::Client::Histogram.exponential_buckets(
+                                                     start: 0.25,
+                                                     factor: 1.5,
+                                                     count: 31
+                                                   ),
                                                    preset_labels: Openapm.default_labels
-                                                  )
+    )
     @registry.register(@histogram)
 
   end
 
   def call(env)
-    return Prometheus::Middleware::Exporter.new(@app, { registry: @registry}).call(env) if env['PATH_INFO'] == @metric_path
+    return Prometheus::Middleware::Exporter.new(@app, { registry: @registry }).call(env) if env['PATH_INFO'] == @metric_path
 
     # https://blog.dnsimple.com/2018/03/elapsed-time-with-ruby-the-right-way/
     starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
