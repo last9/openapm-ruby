@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem 'openapm', path: '../..'
+gem 'rack'
+gem 'puma'
+gem 'rackup'
